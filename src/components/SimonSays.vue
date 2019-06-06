@@ -1,13 +1,11 @@
 <template>
   <div class="container">
-    <section>
-      <div class="button green">Green</div>
-      <div class="button red">Red</div>
-    </section>  
-    <section>
-      <div class="button yellow">Yellow</div>
-      <div class="button blue">Blue</div>
-    </section>
+
+    <!-- the four buttons -->
+    <div v-for="(button, index) in buttons" 
+      :key="index"
+      :class="`button ${button}`"></div>
+
   </div>
 </template>
 
@@ -15,9 +13,11 @@
 
 // NOTES
 // We need to randomize the buttons that simon chooses 
+// Should the buttons be produced as a v-for from an array or object in data 
 // Store those randomized buttons into a variable in data
 // Show the user which buttons 
-// on click on each of the buttons 
+// Let the user click the button 
+// On click on each of the buttons 
 // when it is clicked the function will add to a data variable 
 // 
 
@@ -25,6 +25,20 @@ export default {
   name: 'SimonSays',
   props: {
     msg: String
+  }, 
+  data: function(){
+    return {
+      buttons: ["green", "red", "yellow", "blue"],
+      simonPicks: [],
+      userPicks: []
+    }
+  },
+  created: function() {
+    let min = Math.ceil(1);
+    let max = Math.floor(5);
+    let randomNum = Math.floor(Math.random() * (max - min)) + min;
+    this.simonPicks.push(randomNum);
+    console.log(this.simonPicks)
   }
 }
 </script>
@@ -36,7 +50,6 @@ export default {
 
   .container {
     display: flex;
-    margin: 0 auto;
     justify-content: center;
   }
   
@@ -45,6 +58,7 @@ export default {
     width: 200px;
     height: 200px;
     margin: 10px 5px;
+    // background: black;
   }
 
   .green {
