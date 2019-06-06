@@ -2,24 +2,38 @@
   <div class="container">
 
     <!-- the four buttons -->
-    <div v-for="(button, index) in buttons" 
+    <!-- <div v-for="(button, index) in buttons" 
       :key="index"
-      :class="`button ${button}`"></div>
-
+      :click="userInput(index)"
+      :class="`button ${button}`"></div> -->
+    <section>
+      <div class="button green" @click="userInput(1)"></div>
+      <div class="button red" @click="userInput(3)"></div>
+    </section>
+    <section>
+      <div class="button yellow" @click="userInput(2)"></div>
+      <div class="button blue" @click="userInput(4)"></div>
+    </section>
   </div>
 </template>
 
 <script>
 
 // NOTES
-// We need to randomize the buttons that simon chooses 
-// Should the buttons be produced as a v-for from an array or object in data 
-// Store those randomized buttons into a variable in data
-// Show the user which buttons 
-// Let the user click the button 
-// On click on each of the buttons 
-// when it is clicked the function will add to a data variable 
-// 
+// [X] We need to randomize the buttons that simon chooses 
+// [?] Should the buttons be produced as a v-for from an array or object in data 
+// [ ] Store those randomized buttons into a variable simonPicks in data
+// [ ] Show the user which button Simon decided on 
+// [ ] Let the user click the button 
+// [ ] When it is clicked the function will add to a userPicks data variable 
+// [ ] This needs to be reset every time 
+// [ ] Compare what Simon picks and what the user picks 
+// [ ] If user gets it wrong, console.log wrong 
+// [ ] If user gets it right add to the array 
+
+// QUESTIONS
+// How do you repeat the process over and over again? 
+//
 
 export default {
   name: 'SimonSays',
@@ -29,16 +43,31 @@ export default {
   data: function(){
     return {
       buttons: ["green", "red", "yellow", "blue"],
-      simonPicks: [],
-      userPicks: []
+      simonPicks: "",
+      userPicks: ""
     }
   },
   created: function() {
     let min = Math.ceil(1);
     let max = Math.floor(5);
     let randomNum = Math.floor(Math.random() * (max - min)) + min;
-    this.simonPicks.push(randomNum);
-    console.log(this.simonPicks)
+    this.simonPicks = this.simonPicks + randomNum;
+    console.log("simpon picks", this.simonPicks)
+  },
+  methods: {
+    userInput: function(userPick){
+  
+      this.userPicks = this.userPicks + userPick;
+      console.log(this.userPicks)
+
+      if (this.simonPicks === this.userPicks) {
+        console.log("simon", this.simonPicks, "user", this.userPicks)
+        console.log("good job")
+      } else if (this.simonPicks !== this.userPicks) {
+        console.log("simon", this.simonPicks, "user", this.userPicks)
+        console.log("bad job")
+      }
+    }
   }
 }
 </script>
@@ -53,12 +82,10 @@ export default {
     justify-content: center;
   }
   
-  // button styles
   .button {
     width: 200px;
     height: 200px;
     margin: 10px 5px;
-    // background: black;
   }
 
   .green {
