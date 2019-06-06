@@ -33,7 +33,7 @@
 
 // QUESTIONS
 // How do you repeat the process over and over again? 
-//
+// How to wait for user to give the same number of values as the length of what simpon picks 
 
 export default {
   name: 'SimonSays',
@@ -43,8 +43,8 @@ export default {
   data: function(){
     return {
       buttons: ["green", "red", "yellow", "blue"],
-      simonPicks: "",
-      userPicks: ""
+      simonPicks: [],
+      userPicks: []
     }
   },
   created: function() {
@@ -52,21 +52,38 @@ export default {
     let max = Math.floor(5);
     let randomNum = Math.floor(Math.random() * (max - min)) + min;
     this.simonPicks = this.simonPicks + randomNum;
-    console.log("simpon picks", this.simonPicks)
+    // console.log("simon picks", this.simonPicks)
   },
   methods: {
     userInput: function(userPick){
+
+      let min = Math.ceil(1);
+      let max = Math.floor(5);
+      let randomNum = Math.floor(Math.random() * (max - min)) + min;
   
       this.userPicks = this.userPicks + userPick;
-      console.log(this.userPicks)
+      // console.log(this.userPicks)
 
-      if (this.simonPicks === this.userPicks) {
-        console.log("simon", this.simonPicks, "user", this.userPicks)
-        console.log("good job")
-      } else if (this.simonPicks !== this.userPicks) {
-        console.log("simon", this.simonPicks, "user", this.userPicks)
-        console.log("bad job")
+      // console.log(this.simonPicks.length);
+      for (let i = 0; i < this.simonPicks.length; i++){
+        for (let j = 0; j < this.userPicks.length; i++){
+          // if (this.simonPicks.length === this.userPicks.length && this.simonPicks === this.userPicks) {
+          //   this.userPicks = "";
+          //   this.simonPicks = this.simonPicks + randomNum;
+          // } 
+        }        
       }
+
+      // if (this.simonPicks.length === this.userPicks.length && this.simonPicks === this.userPicks) {
+      //   this.userPicks = "";
+      //   this.simonPicks = this.simonPicks + randomNum;
+      //   // console.log(this.simonPicks)
+      // } 
+      // WHAT DO I DO HERE???
+      // else if (this.simonPicks !== this.userPicks) {
+      //   console.log("simon", this.simonPicks, "user", this.userPicks)
+      //   console.log("bad job game over")
+      // }
     }
   }
 }
