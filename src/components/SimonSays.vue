@@ -7,12 +7,12 @@
       :click="userInput(index)"
       :class="`button ${button}`"></div> -->
     <section>
-      <div class="button green" @click="userInput(1)"></div>
-      <div class="button red" @click="userInput(3)"></div>
+      <div class="button green" @click="userInput(1)" ref="one"></div>
+      <div class="button red" @click="userInput(3)" ref="three"></div>
     </section>
     <section>
-      <div class="button yellow" @click="userInput(2)"></div>
-      <div class="button blue" @click="userInput(4)"></div>
+      <div class="button yellow" @click="userInput(2)" ref="two"></div>
+      <div class="button blue" @click="userInput(4)" ref="four"></div>
     </section>
   </div>
 </template>
@@ -42,48 +42,56 @@ export default {
   }, 
   data: function(){
     return {
-      buttons: ["green", "red", "yellow", "blue"],
-      simonPicks: [],
-      userPicks: []
+      simonPicksArray: [],
+      userPicksArray: [],
     }
   },
   created: function() {
+    // create random number on first load and push it to simonPicksArray
     let min = Math.ceil(1);
     let max = Math.floor(5);
     let randomNum = Math.floor(Math.random() * (max - min)) + min;
-    this.simonPicks = this.simonPicks + randomNum;
-    // console.log("simon picks", this.simonPicks)
+    this.simonPicksArray.push(randomNum);
+    console.log("simon's first number", this.simonPicksArray);
+
+    
   },
   methods: {
     userInput: function(userPick){
-
+      // get random number
       let min = Math.ceil(1);
       let max = Math.floor(5);
       let randomNum = Math.floor(Math.random() * (max - min)) + min;
-  
-      this.userPicks = this.userPicks + userPick;
-      // console.log(this.userPicks)
 
-      // console.log(this.simonPicks.length);
-      for (let i = 0; i < this.simonPicks.length; i++){
-        for (let j = 0; j < this.userPicks.length; i++){
-          // if (this.simonPicks.length === this.userPicks.length && this.simonPicks === this.userPicks) {
-          //   this.userPicks = "";
-          //   this.simonPicks = this.simonPicks + randomNum;
-          // } 
-        }        
+      // push userPick to array 
+      this.userPicksArray.push(userPick);
+      // this.userCount = this.userCount + 1;
+
+      
+      // loop through array, if the item in simponPicksArray is the same as item in userPicksArray, then push another random number to simon array and clear user array 
+       for (let i = 0; i < this.userPicksArray.length; i++){
+        if (this.simonPicksArray[i] === this.userPicksArray[i]){
+          this.userPicksArray = [];
+          this.simonPicksArray.push(randomNum);
+          console.log("good");
+          console.log("simon", this.simonPicksArray, "user", this.userPicksArray);
+        } else {
+          console.log("bad");
+        }
       }
 
-      // if (this.simonPicks.length === this.userPicks.length && this.simonPicks === this.userPicks) {
-      //   this.userPicks = "";
-      //   this.simonPicks = this.simonPicks + randomNum;
-      //   // console.log(this.simonPicks)
-      // } 
-      // WHAT DO I DO HERE???
-      // else if (this.simonPicks !== this.userPicks) {
-      //   console.log("simon", this.simonPicks, "user", this.userPicks)
-      //   console.log("bad job game over")
+
+      // for (let i = 0; i < this.userPicksArray.length; i++){
+      //   if (this.simonPicksArray[i] === this.userPicksArray[i]){
+      //     this.userPicksArray = [];
+      //     this.simonPicksArray.push(randomNum);
+      //     console.log("good");
+      //     console.log("simon", this.simonPicksArray, "user", this.userPicksArray);
+      //   } else {
+      //     console.log("bad");
+      //   }
       // }
+
     }
   }
 }
